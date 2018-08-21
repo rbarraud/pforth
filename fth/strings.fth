@@ -6,20 +6,20 @@
 ANEW TASK-STRINGS.FTH
 
 : -TRAILING  ( c-addr u1 -- c-addr u2 , strip trailing blanks )
-	dup 0>
-	IF
-		BEGIN
-			2dup 1- chars + c@ bl =
-			over 0> and
-		WHILE
-			1-
-		REPEAT
-	THEN
+    dup 0>
+    IF
+        BEGIN
+            2dup 1- chars + c@ bl =
+            over 0> and
+        WHILE
+            1-
+        REPEAT
+    THEN
 ;
 
 \ Structure of string table
 : $ARRAY  (  )
-    CREATE  ( #strings #chars_max --  ) 
+    CREATE  ( #strings #chars_max --  )
         dup ,
         2+ * even-up allot
     DOES>    ( index -- $addr )
@@ -35,27 +35,27 @@ ANEW TASK-STRINGS.FTH
         2 pick c@ tolower -
         IF rot drop 0 -rot LEAVE
         THEN
-		1+ swap 1+ swap
+        1+ swap 1+ swap
     LOOP 2drop
 ;
 
 : TEXT=  ( addr1 addr2 count -- flag )
     >r -1 -rot
-	r> 0
-    DO  dup c@ tolower
+    r> 0
+    ?DO  dup c@ tolower
         2 pick c@ tolower -
         IF rot drop 0 -rot LEAVE
         THEN
-		1+ swap 1+ swap
+        1+ swap 1+ swap
     LOOP 2drop
 ;
 
 : TEXT=?  ( addr1 count addr2 -- flag , for JForth compatibility )
-	swap text=
+    swap text=
 ;
 
 : $MATCH?  ( $string1 $string2 -- flag , case INsensitive )
-	dup c@ 1+ text=
+    dup c@ 1+ text=
 ;
 
 
@@ -80,7 +80,7 @@ ANEW TASK-STRINGS.FTH
 : ($ROM)  ( index address -- $string )
     ( -- index address )
     swap 0
-    DO dup c@ 1+ + aligned
+    ?DO dup c@ 1+ + aligned
     LOOP
 ;
 

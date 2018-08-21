@@ -6,7 +6,7 @@
 \ Enter:   WORDS.LIKE EMIT
 \
 \ Author: Phil Burk
-\ Copyright 1994 3DO, Phil Burk, Larry Polansky, Devid Rosenboom
+\ Copyright 1994 3DO, Phil Burk, Larry Polansky, David Rosenboom
 \
 \ The pForth software code is dedicated to the public domain,
 \ and any third party may reproduce, distribute and modify
@@ -22,23 +22,23 @@ decimal
 
 
 : PARTIAL.MATCH.NAME  ( $str1 nfa  -- flag , is $str1 in nfa ??? )
-	count $ 1F and
-	rot count
-	search
-	>r 2drop r>
+    count $ 1F and
+    rot count
+    search
+    >r 2drop r>
 ;
 
 : WORDS.LIKE  ( <name> -- , print all words containing substring )
-	BL word latest
-	>newline
-	BEGIN
-		prevname dup 0<> \ get previous name in dictionary
-	WHILE
-		2dup partial.match.name
-		IF
-			dup id. tab
-			cr?
-		THEN
-	REPEAT 2drop
-	>newline
+    BL word latest
+    >newline
+    BEGIN
+        prevname dup 0<> \ get previous name in dictionary
+    WHILE
+        2dup partial.match.name
+        IF
+            dup id. tab
+            cr?
+        THEN
+    REPEAT 2drop
+    >newline
 ;

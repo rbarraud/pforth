@@ -24,11 +24,10 @@ PFORTHAPP    = pforth_standalone
 WIDTHOPT=
 
 FULL_WARNINGS =  \
-        -c89 \
+        --std=c89 \
         -fsigned-char \
         -fno-builtin \
         -fno-unroll-loops \
-        -fpeephole \
         -fno-keep-inline-functions \
         -pedantic \
         -Wcast-qual \
@@ -41,10 +40,10 @@ FULL_WARNINGS =  \
 DEBUGOPTS = -g
 CCOPTS = $(WIDTHOPT) -x c -O2 $(FULL_WARNINGS) $(EXTRA_CCOPTS) $(DEBUGOPTS)
 
-IO_SOURCE = pf_io_posix.c
+IO_SOURCE = pf_io_posix.c pf_fileio_stdio.c
 #IO_SOURCE = pf_io_stdio.c
 
-EMBCCOPTS = -DPF_STATIC_DIC
+EMBCCOPTS = -DPF_STATIC_DIC #-DPF_NO_FILEIO
 
 #######################################
 PFINCLUDES = pf_all.h pf_cglue.h pf_clib.h pf_core.h pf_float.h \
@@ -59,7 +58,7 @@ PFSOURCE = $(PFBASESOURCE) $(IO_SOURCE)
 VPATH = .:$(CSRCDIR):$(CSRCDIR)/posix:$(CSRCDIR)/stdio:$(CSRCDIR)/win32_console:$(CSRCDIR)/win32
 
 XCFLAGS = $(CCOPTS)
-XCPPFLAGS = -DPF_SUPPORT_FP
+XCPPFLAGS = -DPF_SUPPORT_FP -D_DEFAULT_SOURCE -D_GNU_SOURCE
 XLDFLAGS = $(WIDTHOPT)
 
 CPPFLAGS = -I. $(XCPPFLAGS)
@@ -136,6 +135,7 @@ test: $(PFORTHAPP)
 	wd=$$(pwd); (cd $(FTHDIR); $${wd}/$(PFORTHAPP) -q t_locals.fth)
 	wd=$$(pwd); (cd $(FTHDIR); $${wd}/$(PFORTHAPP) -q t_alloc.fth)
 	wd=$$(pwd); (cd $(FTHDIR); $${wd}/$(PFORTHAPP) -q t_floats.fth)
+	wd=$$(pwd); (cd $(FTHDIR); $${wd}/$(PFORTHAPP) -q t_file.fth)
 
 clean:
 	rm -f $(PFOBJS) $(PFEMBOBJS)

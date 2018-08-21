@@ -28,10 +28,10 @@ typedef double PF_FLOAT;
 #define fp_atan   atan
 #define fp_atan2  atan2
 #define fp_cos    cos
-#define fp_cosh   cosh  
+#define fp_cosh   cosh
 #define fp_fabs   fabs
 #define fp_floor  floor
-#define fp_log    log  
+#define fp_log    log
 #define fp_log10  log10
 #define fp_pow    pow
 #define fp_sin    sin
@@ -39,5 +39,6 @@ typedef double PF_FLOAT;
 #define fp_sqrt   sqrt
 #define fp_tan    tan
 #define fp_tanh   tanh
+#define fp_round  round
 
 #endif
